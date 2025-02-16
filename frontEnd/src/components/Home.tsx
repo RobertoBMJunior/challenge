@@ -15,7 +15,7 @@ export default function Home() {
   const url = 'http://localhost:3333/task';
   const [tasks, setTasks] = useState<Task[]>([]); // Definindo o tipo de tasks como um array de Task
 
-  useEffect(() => {
+  function fetchTasks() {
     fetch(url, {
       method: 'GET', // Método da requisição (GET é o padrão, mas pode ser explícito)
     })
@@ -33,12 +33,21 @@ export default function Home() {
       .catch(error => {
         console.error('Erro:', error); // Captura e exibe erros
       });
+  }
+
+  useEffect(() => {
+    fetchTasks()
   }, []); // O array vazio [] garante que a requisição seja feita apenas uma vez, ao montar o componente
+
+  function handleTaskCreated() {
+    fetchTasks()
+  } 
+
 
   return (
     <HomeContainer>
       <h1>Suas Tarefas</h1>
-      <CreateTask/>
+      <CreateTask onTaskCreated={handleTaskCreated}/>
       <div className="tasksContainer">
         {tasks.length > 0 ? (
             tasks.map((task) => (

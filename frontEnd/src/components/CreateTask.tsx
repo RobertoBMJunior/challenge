@@ -2,13 +2,18 @@ import { useForm } from "react-hook-form";
 import { CreateTaskContainer } from "./CreateTask.styles";
 
 interface Task {
+    id: number;
     titulo: string;
     descricao: string;
     status: 'PENDENTE' | 'EM_ANDAMENTO' | 'FEITO';
   }
 
+interface CreateTaskProps {
+    onTaskCreated: () => void; // Função para notificar o componente pai que uma tarefa foi criada
+}
 
-export function CreateTask () {
+
+export function CreateTask ({onTaskCreated}: CreateTaskProps) {
     const { register, handleSubmit, reset } = useForm<Task>();
     const url = 'http://localhost:3333/task';
 
@@ -29,8 +34,9 @@ export function CreateTask () {
         body: JSON.stringify(newTask) // Converte o objeto data em uma string JSON
         })
         .then(response => response.json()) // Converte a resposta para JSON
-        .then(data => {
-            console.log('Sucesso:', data); // Exibe os dados retornados
+        .then(createdTask => {
+            console.log('Sucesso:', createdTask); // Exibe os dados retornados
+            onTaskCreated() 
         })
         .catch(error => {
             console.error('Erro:', error); // Exibe erros caso ocorram
