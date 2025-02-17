@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { CardTaskContainer } from './CardTask.styles';
 import { Trash2 } from 'lucide-react';
+import { ModalEditTask } from './ModalEditTask';
 
 interface TaskProps {
   id: number;
@@ -43,7 +44,6 @@ export function CardTask({ id, titulo, descricao, status, onUpdateTask }: TaskPr
   };
 
   async function handleDelete() {
-
     try {
       const response = await fetch(`http://localhost:3333/task/${id}`, {
         method: 'DELETE',
@@ -63,10 +63,14 @@ export function CardTask({ id, titulo, descricao, status, onUpdateTask }: TaskPr
 
   return (
     <CardTaskContainer status={selectedStatus}>
-      <div>
+      
+      <div className='modal-titulo-descricao'>
+        <ModalEditTask/> 
         <h2>{titulo}</h2>
-        <p className="descricao">{descricao}</p>
+        <p className="descricao">{descricao}</p> 
       </div>
+
+       
 
       <div className='selectAndExclude'>
         <select name="status" id="" className='selectContainer' value={selectedStatus} onChange={handleStatusChange}>
@@ -80,6 +84,7 @@ export function CardTask({ id, titulo, descricao, status, onUpdateTask }: TaskPr
           <span>Excluir</span>
         </button>
       </div>
+
 
     </CardTaskContainer>
   );

@@ -12,12 +12,19 @@ const statusCores = {
 
 export const CardTaskContainer = styled.article<Status>`
   padding: 1.3rem;
+  padding-left: 4rem;
   border-radius: 1rem 1rem 1rem 1rem;
   display: flex;
   gap: 1rem;
   justify-content: space-between;
   align-items: center;
   background-color: ${props => statusCores[props.status]};
+
+  position: relative;
+
+  .modal-titulo-descricao{
+    
+  }
 
   h2 {
     font-size: 1.3rem;
