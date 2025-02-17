@@ -39,7 +39,7 @@ export default function Home() {
     fetchTasks()
   }, []); // O array vazio [] garante que a requisição seja feita apenas uma vez, ao montar o componente
 
-  function handleTaskCreated() {
+  function handleUpdateTask() {
     fetchTasks()
   } 
 
@@ -47,7 +47,7 @@ export default function Home() {
   return (
     <HomeContainer>
       <h1>Suas Tarefas</h1>
-      <CreateTask onTaskCreated={handleTaskCreated}/>
+      <CreateTask onTaskCreated={handleUpdateTask}/>
       <div className="tasksContainer">
         {tasks.length > 0 ? (
             tasks.map((task) => (
@@ -57,6 +57,7 @@ export default function Home() {
                     titulo={task.titulo}
                     descricao={task.descricao}
                     status={task.status}
+                    onUpdateTask={handleUpdateTask}
                 />
             ))
             ) : (

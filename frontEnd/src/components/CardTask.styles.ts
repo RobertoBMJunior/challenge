@@ -31,6 +31,12 @@ export const CardTaskContainer = styled.article<Status>`
     color: ${props => props.theme.white};
   }
 
+  .selectAndExclude{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
   .selectContainer {
     padding: 0.4rem;
     background-color: ${props => props.theme.amarelo};
@@ -44,6 +50,34 @@ export const CardTaskContainer = styled.article<Status>`
   .selectContainer:focus {
     outline: none;
     }
+
+    .exclude{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.4rem;
+
+        padding: 0.4rem;
+        border-radius: 8px;
+
+        background-color: #62748e;
+
+        border: 1px solid #0a0a0a;
+
+    }
+
+    .exclude:hover{
+        background-color: #90a1b9;
+        cursor: pointer;
+        
+        
+    }
+
+    .exclude:hover svg, .exclude:hover span {
+        /* scale: 1.01; */
+        transition: transform 0.3s ease;
+    }
+
 `;
 
   /* .select-container {

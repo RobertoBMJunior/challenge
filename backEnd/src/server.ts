@@ -84,7 +84,7 @@ app.delete('/task/:id', async (request, reply) => {
       where: { id: parseInt(id) },
     });
 
-    reply.code(204).send();
+    reply.code(204).send("Tarefa deletada");
   } catch (error) {
     reply.code(404).send({ error: 'Task not found' });
   }

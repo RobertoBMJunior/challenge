@@ -45,7 +45,6 @@ export function CreateTask ({onTaskCreated}: CreateTaskProps) {
 
         // console.log(data)
 
-
         reset()
     }
 

@@ -1,15 +1,19 @@
 // import * as Select from '@radix-ui/react-select';
 import React, { useState } from 'react';
 import { CardTaskContainer } from './CardTask.styles';
+import { Trash2 } from 'lucide-react';
 
 interface TaskProps {
   id: number;
   titulo: string;
   descricao: string;
   status: 'PENDENTE' | 'EM_ANDAMENTO' | 'FEITO';
+  onUpdateTask: () => void
 }
 
-export function CardTask({ id, titulo, descricao, status }: TaskProps) {
+
+
+export function CardTask({ id, titulo, descricao, status, onUpdateTask }: TaskProps) {
   const [selectedStatus, setSelectedStatus] = useState<'PENDENTE' | 'EM_ANDAMENTO' | 'FEITO'>(status);
 
   const handleStatusChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -38,6 +42,25 @@ export function CardTask({ id, titulo, descricao, status }: TaskProps) {
     }
   };
 
+  async function handleDelete() {
+
+    try {
+      const response = await fetch(`http://localhost:3333/task/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        console.log('Tarefa deletada com sucesso!');
+        onUpdateTask()
+      } else {
+        console.error('Erro ao deletar a task');
+      }
+    } catch (error) {
+      console.error('Erro na requisição ao deletar a task:', error);
+    }
+
+  }
+
   return (
     <CardTaskContainer status={selectedStatus}>
       <div>
@@ -45,11 +68,18 @@ export function CardTask({ id, titulo, descricao, status }: TaskProps) {
         <p className="descricao">{descricao}</p>
       </div>
 
-      <select name="status" id="" className='selectContainer' value={selectedStatus} onChange={handleStatusChange}>
-        <option value="PENDENTE">PENDENTE</option>
-        <option value="EM_ANDAMENTO">EM ANDAMENTO</option>
-        <option value="FEITO">FEITO</option>
-      </select>
+      <div className='selectAndExclude'>
+        <select name="status" id="" className='selectContainer' value={selectedStatus} onChange={handleStatusChange}>
+          <option value="PENDENTE">PENDENTE</option>
+          <option value="EM_ANDAMENTO">EM ANDAMENTO</option>
+          <option value="FEITO">FEITO</option>
+        </select>
+
+        <button className='exclude' onClick={handleDelete}>
+          <Trash2/>
+          <span>Excluir</span>
+        </button>
+      </div>
 
     </CardTaskContainer>
   );
